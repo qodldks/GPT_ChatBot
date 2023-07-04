@@ -1,6 +1,9 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useState } from 'react';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import {
+  View,
+  Image,
+  Modal,
   Pressable,
   SafeAreaView,
   ScrollView,
@@ -15,10 +18,18 @@ const HomeScreen: React.FC<{ navigation: NativeStackNavigationProp<any> }> = ({
     navigation.navigate(route);
   };
 
+  const [visible, setVisible] = useState(false);
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.scrollview}>
         <Text style={styles.title}>멋진 채팅 친구</Text>
+        <Image
+          source={{
+            uri: 'https://m.betanews.net/imagedb/thumb/2009/0816/5701f839.jpg',
+          }}
+          style={{ height: 400, marginBottom: 20, borderRadius: 16 }}
+        />
         <Pressable
           style={[styles.menu, styles.carret]}
           onPress={() => {
@@ -40,6 +51,49 @@ const HomeScreen: React.FC<{ navigation: NativeStackNavigationProp<any> }> = ({
           }}>
           <Text style={styles.menuText}>자유채팅</Text>
         </Pressable>
+        <Pressable
+          style={[styles.menu, styles.developer]}
+          onPress={() => {
+            setVisible(true);
+          }}>
+          <Text style={styles.menuText}>개발자</Text>
+        </Pressable>
+        <Modal
+          transparent
+          visible={visible}
+          animationType="slide"
+          // presentationStyle={'formSheet'}
+        >
+          <View
+            style={{
+              backgroundColor: '#00000075',
+              maxHeight: 900,
+              flex: 1,
+              alignItems: 'center',
+              justifyContent: 'center',
+             
+            }}>
+            <View
+              style={{
+                flex: 1,
+                justifyContent: 'center',
+                alignItems: 'center',
+                width: 200,
+                maxHeight: 150,
+                backgroundColor: 'white',
+                borderRadius: 16,
+                paddingTop: 12,
+              }}>
+              <Text style={styles.modalText}>신준서</Text>
+              <Pressable
+                onPress={() => {
+                  setVisible(false);
+                }}>
+                <Text>닫기</Text>
+              </Pressable>
+            </View>
+          </View>
+        </Modal>
       </ScrollView>
     </SafeAreaView>
   );
@@ -60,12 +114,12 @@ const styles = StyleSheet.create({
     fontSize: 24,
     marginTop: 30,
     color: 'black',
-    marginBottom: 30,
+    marginBottom: 10,
   },
   menu: {
     padding: 20,
     borderRadius: 16,
-    marginBottom: 8,
+    marginBottom: 12,
   },
   menuText: {
     fontSize: 18,
@@ -80,6 +134,15 @@ const styles = StyleSheet.create({
   },
   chat: {
     backgroundColor: '#2962FF',
+  },
+  developer: {
+    backgroundColor: '#1c1c1c',
+  },
+  modalText: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#000',
+    marginBottom: 24
   },
 });
 
